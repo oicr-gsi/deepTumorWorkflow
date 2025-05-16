@@ -29,7 +29,7 @@ workflow deepTumour {
         dependencies: [
             {
                 name: "deep-tumour/3.0.1",
-                url: "https://github.com/oicr-gsi/DeepTumour"
+                url: "https://github.com/LincolnSteinLab/DeepTumour"
             }
         ]
       output_meta: {
@@ -68,6 +68,7 @@ task runDeepTumour {
         set -euo pipefail
         
         mkdir out
+        source $DEEP_TUMOUR_ROOT/.venv/bin/activate
         python $DEEP_TUMOUR_ROOT/src/DeepTumour.py --vcfFile ~{vcf} --reference $HG19_ROOT/hg19_random.fa --~{liftover} --outDir out
         mv out/predictions_DeepTumour.json ~{outputFileNamePrefix}.predictions_DeepTumour.json
 
